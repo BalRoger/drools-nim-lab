@@ -1,0 +1,40 @@
+package org.integrallis.nim
+
+import org.integrallis.nim.Piece;
+import org.integrallis.nim.Turn;
+import org.integrallis.nim.Board;
+import org.integrallis.nim.Outcome;
+import org.integrallis.nim.Outcome.OutcomeType;
+import org.integrallis.nim.Move;
+
+rule "User Moves"
+	when
+		move : Move()
+		board : Board(turn == Turn.HUMAN)
+	then
+		board.move(move);
+		retract(move);
+		update(board);
+end
+
+// ADD YOUR RULES HERE! 
+
+rule "HumanWins"
+	when
+		board : Board(piecesLeft == 0, turn == Turn.HUMAN)
+	then
+		System.out.println("Human Wins!");
+		insert(new Outcome(OutcomeType.WIN));
+end
+
+rule "ComputerWins"
+	when
+		board : Board(piecesLeft == 1, turn == Turn.HUMAN)
+	then
+		System.out.println("Computer Wins!");
+		insert(new Outcome(OutcomeType.LOSE));
+end
+
+query "GetOutcome"
+  outcome : Outcome()
+end
