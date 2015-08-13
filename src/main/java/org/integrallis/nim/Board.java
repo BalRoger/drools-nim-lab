@@ -1,7 +1,6 @@
 package org.integrallis.nim;
 
-import static org.integrallis.nim.Turn.COMPUTER;
-import static org.integrallis.nim.Turn.HUMAN;
+import static org.integrallis.nim.Turn.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,10 +13,11 @@ public class Board {
 	}
 
 	public void move(Move move) {
-		for (int i = 0; i < move.getHowMany(); i++) {
+		int realMove = Math.min(move.getHowMany(), pieces.size());
+		for (int i = 0; i < realMove; i++) {
 			pieces.remove(pieces.size() - 1);
 		}
-		System.out.println("* You took " + move.getHowMany());
+		System.out.println("* You took " + realMove);
 		System.out.println(this);
 		toggleTurn();
 	}
@@ -52,6 +52,7 @@ public class Board {
 		System.out.println("It is now " + currentTurn + " turn");
 	}
 
+	@Override
 	public String toString() {
 		return pieces + " ==> board has " + piecesLeft() + " pieces left";
 	}

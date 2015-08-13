@@ -6,6 +6,7 @@ import org.integrallis.nim.Board;
 import org.integrallis.nim.Outcome;
 import org.integrallis.nim.Outcome.OutcomeType;
 import org.integrallis.nim.Move;
+import java.util.Arrays;
 
 rule "User Moves"
 	when
@@ -17,8 +18,46 @@ rule "User Moves"
 		update(board);
 end
 
-// ADD YOUR RULES HERE! 
+rule "Computer Moves"
+    when
+        board : Board( turn == Turn.COMPUTER, pl: piecesLeft)
+    then
+        board.move(Move.get((pl + 3) % 4));
+        update(board);
+end
+/*
+rule "Computer Takes One"
+    when
+        board : Board( turn == Turn.COMPUTER, eval((piecesLeft % 4) == 2) )
+    then
+        board.move(Move.TAKE_ONE);
+        update(board);
+end
 
+rule "Computer Takes Two"
+    when
+        board : Board( turn == Turn.COMPUTER, eval((piecesLeft % 4) == 3) )
+    then
+        board.move(Move.TAKE_TWO);
+        update(board);
+end
+
+rule "Computer Takes Three"
+    when
+        board : Board( turn == Turn.COMPUTER, eval((piecesLeft % 4) == 0) )
+    then
+        board.move(Move.TAKE_THREE);
+        update(board);
+end
+
+rule "Computer Takes Random"
+    when
+        board : Board( turn == Turn.COMPUTER, pl: piecesLeft, eval((piecesLeft % 4) == 1) )
+    then
+        board.move(Move.get(Math.min(pl, new java.util.Random().nextInt(3) + 1)));
+        update(board);
+end
+*/
 rule "HumanWins"
 	when
 		board : Board(piecesLeft == 0, turn == Turn.HUMAN)

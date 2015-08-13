@@ -1,19 +1,17 @@
 package org.integrallis.nim.main;
 
-import static org.integrallis.nim.Move.TAKE_ONE;
-import static org.integrallis.nim.Move.TAKE_THREE;
-import static org.integrallis.nim.Move.TAKE_TWO;
+import static org.integrallis.nim.Move.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import org.integrallis.nim.Board;
+import org.integrallis.nim.Outcome;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
-import org.integrallis.nim.Board;
-import org.integrallis.nim.Outcome;
 
 public class NimCLI {
 
@@ -68,7 +66,7 @@ public class NimCLI {
 						Outcome outcome = (Outcome) row.get( "outcome" );
 						switch (outcome.getResult()) {
 						case WIN:
-							System.out.println("You won't smarty pants!");
+							System.out.println("You won smarty pants!");
 							break;
 						case LOSE:
 							System.out.println("You lost loser!");
